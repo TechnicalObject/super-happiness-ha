@@ -1,0 +1,43 @@
+blueprint:
+  name: Ping Healthchecks instance
+  description: >
+    Send an HTTP GET ping to Healthchecks.io instance using hostname, project UUID and
+    healthcheck slug. URL format:
+    https://<hostname>/ping/<project_uuid>/<healthcheck_slug>
+    project_uuid is taken from input_text.healthchecks_uuid
+  domain: automation
+  input:
+    healthcheck_slug:
+      name: Healthcheck slug
+      description: Slug of the check in the project.
+      selector:
+        text:
+    project_uuid:
+      name: Healthcheck UUID
+      description: Slug of the check in the project.
+      default: ""
+      selector:
+        text: {}
+
+mode: single
+max_exceeded: silent
+
+variables:
+  healthcheck_slug: !input healthcheck_slug
+  project_uuid_input: !input project_uuid
+  project_uuid: >
+    {% if project_uuid_input %}
+      {{ project_uuid_input }}
+    {% else %}
+      {{ states('input_text.healthchecks_uuid') }}
+    {% endif %}
+
+trigger:
+  - platform: time_pattern
+    minutes: "*"
+
+action:
+  - service: rest_command.healthchecks_ping
+    data:
+      project_uuid: "{{ project_uuid }}"
+      healthcheck_slug: "{{ this.attributes.friendly_name | lower | replace(' ', '-') }}"
