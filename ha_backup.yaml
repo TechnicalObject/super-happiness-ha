@@ -1,5 +1,5 @@
 blueprint:
-  name: (Local) HA Backup to Remote
+  name: HA Backup to Remote
   description: "Creates a Home Assistant backup and pings Healthchecks.io"
   domain: automation
   input:
