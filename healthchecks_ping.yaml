@@ -5,13 +5,9 @@ blueprint:
     healthcheck slug. URL format:
     https://<hostname>/ping/<project_uuid>/<healthcheck_slug>
     project_uuid is taken from input_text.healthchecks_uuid
+    healthcheck_slug is taken from automation name e.g. HA Upcheck = ha-upcheck
   domain: automation
   input:
-    healthcheck_slug:
-      name: Healthcheck slug
-      description: Slug of the check in the project.
-      selector:
-        text:
     project_uuid:
       name: Healthcheck UUID
       description: Slug of the check in the project.
@@ -23,7 +19,6 @@ mode: single
 max_exceeded: silent
 
 variables:
-  healthcheck_slug: !input healthcheck_slug
   project_uuid_input: !input project_uuid
   project_uuid: >
     {% if project_uuid_input %}
