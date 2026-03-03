@@ -1,11 +1,11 @@
 blueprint:
   name: Ping Healthchecks instance
-  description: >
-    Send an HTTP GET ping to Healthchecks.io instance using hostname, project UUID and
-    healthcheck slug. URL format:
-    https://<hostname>/ping/<project_uuid>/<healthcheck_slug>
-    project_uuid is taken from input_text.healthchecks_uuid
-    healthcheck_slug is taken from automation name e.g. HA Upcheck = ha-upcheck
+  description: |
+    Send an HTTP GET ping to Healthchecks.io instance using hostname, project UUID, and healthcheck slug.
+    URL format:
+      https://<hostname>/ping/<project_uuid>/<healthcheck_slug>
+    - project_uuid is taken from input_text.healthchecks_uuid
+    - healthcheck_slug is taken from the automation name (e.g., HA Upcheck = ha-upcheck)
   domain: automation
   input:
     project_uuid:
