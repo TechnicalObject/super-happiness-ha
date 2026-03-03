@@ -1,0 +1,31 @@
+blueprint:
+  name: (Local) HA Backup to Remote
+  description: "Creates a Home Assistant backup and pings Healthchecks.io"
+  domain: automation
+  input:
+    backup_time:
+      name: Backup Time
+      description: Time to run the backup
+      selector:
+        time: {}
+    healthcheck_slug:
+      name: Healthcheck Slug
+      description: Slug for Healthchecks.io ping
+      default: ha-backup
+      selector:
+        text: {}
+
+trigger:
+  - platform: time
+    at: !input backup_time
+
+condition: []
+
+action:
+  - service: backup.create_automatic
+    data: {}
+  - service: rest_command.healthchecks_ping
+    data:
+      healthcheck_slug: !input healthcheck_slug
+
+mode: single
