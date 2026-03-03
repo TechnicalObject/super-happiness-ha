@@ -8,3 +8,4 @@ rest_command:
         ping_type | default('')
       }}
 ```
+Also helper input_text.healthchecks_uuid needs to be created and populated with correct healthcheck project UUID
